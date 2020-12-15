@@ -1,8 +1,8 @@
 {
   "name": "grpc-js-health-check",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Implementation for gRPC health check using @grpc/grpc-js",
-  "main": "index.js",
+  "main": "health.js",
   "scripts": {
     "test": "nodemon --exec 'mocha --recursive -R min --exit --timeout 5000'"
   },
