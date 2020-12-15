@@ -1,0 +1,28 @@
+{
+  "name": "grpc-js-health-check",
+  "version": "1.0.0",
+  "description": "Implementation for gRPC health check using @grpc/grpc-js",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon --exec 'mocha --recursive -R min --exit --timeout 5000'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khacminh/grpc-js-healthcheck.git"
+  },
+  "keywords": [],
+  "author": "Minh Ho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khacminh/grpc-js-healthcheck/issues"
+  },
+  "homepage": "https://github.com/khacminh/grpc-js-healthcheck#readme",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.2.2",
+    "@grpc/proto-loader": "^0.5.5",
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  }
+}
