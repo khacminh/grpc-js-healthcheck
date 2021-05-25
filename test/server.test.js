@@ -28,9 +28,7 @@ describe('testing health check for gRPC server', () => {
   });
 
   it('should say an enabled service is SERVING', (done) => {
-    const request = {
-      service: '',
-    };
+    const request = {};
 
     client.check(request, (err, response) => {
       assert.ifError(err);
