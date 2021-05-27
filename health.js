@@ -11,7 +11,7 @@ const protoDefinition = protoLoader.loadSync(protoPath, {
   keepCase: false,
   longs: String,
   enums: String,
-  defaults: false,
+  defaults: true,
   oneofs: true,
 });
 
