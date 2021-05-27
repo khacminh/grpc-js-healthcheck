@@ -21,7 +21,7 @@ function startGrpcServer(host, healthImpl) {
 }
 
 function stopGrpcServer() {
-  server.tryShutdown((error) => {
+  server.tryShutdown(error => {
     // do nothing
   });
 }

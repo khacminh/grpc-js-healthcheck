@@ -25,7 +25,6 @@ const servingStatus = {
   SERVICE_UNKNOWN: 'SERVICE_UNKNOWN', // Used only by the Watch method.
 };
 
-
 class HealthImplementation {
   constructor(statusMap) {
     this.statusMap = _.cloneDeep(statusMap);
@@ -46,7 +45,6 @@ class HealthImplementation {
     }
   }
 }
-
 
 module.exports = {
   servingStatus,

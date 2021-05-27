@@ -34,7 +34,6 @@ function createCallOptions(timeoutMs = 60000) {
   };
 }
 
-
 module.exports = {
   createGrpcClient,
   createCallOptions,

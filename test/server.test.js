@@ -27,7 +27,19 @@ describe('testing health check for gRPC server', () => {
     stopGrpcServer();
   });
 
-  it('should say an enabled service is SERVING', (done) => {
+  it('should say an enabled service is SERVING', done => {
+    const request = {
+      service: '',
+    };
+
+    client.check(request, (err, response) => {
+      assert.ifError(err);
+      assert.strictEqual(response.status, servingStatus.SERVING);
+      done();
+    });
+  });
+
+  it('should say an enabled service is SERVING - empty request for service="" ', done => {
     const request = {};
 
     client.check(request, (err, response) => {
@@ -37,7 +49,7 @@ describe('testing health check for gRPC server', () => {
     });
   });
 
-  it('should say that a disabled service is NOT_SERVING', (done) => {
+  it('should say that a disabled service is NOT_SERVING', done => {
     const request = {
       service: 'grpc.test.TestServiceNotServing',
     };
@@ -49,7 +61,7 @@ describe('testing health check for gRPC server', () => {
     });
   });
 
-  it('should say that a disabled service is SERVING', (done) => {
+  it('should say that a disabled service is SERVING', done => {
     const request = {
       service: 'grpc.test.TestServiceServing',
     };
@@ -61,24 +73,24 @@ describe('testing health check for gRPC server', () => {
     });
   });
 
-  it('should get NOT_FOUND if the service is not registered', (done) => {
+  it('should get NOT_FOUND if the service is not registered', done => {
     const request = {
       service: 'not_registered',
     };
 
-    client.check(request, (err) => {
+    client.check(request, err => {
       assert(err);
       assert.strictEqual(err.code, grpc.status.NOT_FOUND);
       done();
     });
   });
 
-  it('should get a different response if the status changes', (done) => {
+  it('should get a different response if the status changes', done => {
     const request = {
       service: 'transient',
     };
 
-    client.check(request, (err) => {
+    client.check(request, err => {
       assert(err);
       assert.strictEqual(err.code, grpc.status.NOT_FOUND);
 
