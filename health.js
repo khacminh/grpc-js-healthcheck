@@ -26,22 +26,68 @@ const servingStatus = {
 };
 
 class HealthImplementation {
+  #watchers;
+
   constructor(statusMap) {
     this.statusMap = _.cloneDeep(statusMap);
+    this.#watchers = {};
   }
 
   setStatus(service, status) {
     this.statusMap[service] = status;
+
+    const serviceWatchers = this.#watchers[service] || [];
+
+    for (let i = 0; i < serviceWatchers.length; i += 1) {
+      const watcher = serviceWatchers[i];
+      watcher.write({ status });
+    }
   }
 
   check(call, callback) {
-    // callback(null, )
     const { service } = call.request;
     const status = _.get(this.statusMap, service, null);
     if (status === null) {
       callback({ code: grpc.status.NOT_FOUND });
     } else {
       callback(null, { status });
+    }
+  }
+
+  watch(call) {
+    const { service } = call.request;
+    this.#addWatcher(service, call);
+    call.on('cancelled', () => {
+      console.log('client cancelled !!!!');
+      this.#removeWatcher(service, call);
+    });
+
+    call.on('end', () => {
+      console.log('client end !!!!');
+      this.#removeWatcher(service, call);
+    });
+
+    const currentStatus = _.get(this.statusMap, service, null);
+    if (!currentStatus) {
+      call.write({ status: servingStatus.SERVICE_UNKNOWN });
+      return;
+    }
+    call.write({ status: currentStatus });
+  }
+
+  #addWatcher(service, watcher) {
+    const serviceWatchers = this.#watchers[service];
+    if (serviceWatchers) {
+      serviceWatchers.push(watcher);
+      return;
+    }
+    this.#watchers[service] = [watcher];
+  }
+
+  #removeWatcher(service, watcher) {
+    const serviceWatcher = this.#watchers[service];
+    if (serviceWatcher) {
+      _.pull(serviceWatcher, watcher);
     }
   }
 }

@@ -8,6 +8,14 @@ For the example, please take a look on the [test](https://github.com/khacminh/gr
 
 ## Change notes
 
+### Version 1.2.x
+
+- Implement `watch` method
+- Update the dependencies
+- Dependencies:
+  - @grpc/grpc-js: 1.9.13
+  - @grpc/proto-loader: 0.7.10
+
 ### Version 1.1.x
 
 - Update the dependencies
