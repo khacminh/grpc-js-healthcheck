@@ -4,7 +4,26 @@ Implementation for gRPC health check using [@grpc/grpc-js](https://www.npmjs.com
 
 This package is drop-in replacement for [grpc-health-check](https://www.npmjs.com/package/grpc-health-check)
 
-For the example, please take a look on the [test](https://github.com/khacminh/grpc-js-healthcheck/tree/main/test)
+## Example
+
+```js
+const { servingStatus, Implementation, service } = require('grpc-js-health-check');
+
+const statusMap = {
+  '': servingStatus.SERVING,
+  'ServiceFoo': servingStatus.NOT_SERVING,
+  'ServiceBar': servingStatus.SERVING,
+};
+const healthImpl = new Implementation(statusMap);
+
+// add to gRPC server
+server.addService(service, healthImpl);
+
+// set service status
+healthImpl.setStatus('ServiceFoo', servingStatus.SERVING);
+```
+
+> For more example, please take a look on the [test](https://github.com/khacminh/grpc-js-healthcheck/tree/main/test)
 
 ## Change notes
 
